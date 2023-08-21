@@ -8,6 +8,7 @@ import { slugify } from '../utils/slugify'
 
 const app = express();
 app.use(cors())
+app.options('*', cors());
 
 app.get('/products', async function(req, res) {
     const method  = req.method
