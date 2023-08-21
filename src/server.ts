@@ -1,10 +1,13 @@
-import express from 'express';
+import express from 'express'
 import { load } from 'cheerio'
-import puppeteer from "puppeteer"
-import { URL } from "url";
-import { IProduct } from "../types/Product.types";
-import { slugify } from "../utils/slugify";
+import puppeteer from 'puppeteer'
+import cors from 'cors'
+import { URL } from 'url'
+import { IProduct } from '../types/Product.types'
+import { slugify } from '../utils/slugify'
+
 const app = express();
+app.use(cors())
 
 app.get('/products', async function(req, res) {
     const method  = req.method
@@ -49,6 +52,8 @@ app.get('/products', async function(req, res) {
     res.send(products)
 });
 
+app.listen(3000);
+
 async function getProducts(
     products: IProduct[],
     searchUrl: any,
@@ -76,7 +81,6 @@ async function getProducts(
         const price = $(priceSelector, el).text()
         const link = 'https://www.kabum.com.br' + $('> a',el).attr('href')
 
-        console.log(image)
         products.push({
             lojaId: idLoja, image, title, price, link
         })
