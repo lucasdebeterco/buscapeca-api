@@ -50,6 +50,7 @@ app.get('/products', async function(req, res) {
     )
 
     products.sort((a: IProduct, b: IProduct) => parseFloat(a.price.split('R$ ')[1]) > parseFloat(b.price.split('R$ ')[1]) ? 1: -1)
+    res.header("Access-Control-Allow-Origin", "*")
     res.send(products)
 });
 
