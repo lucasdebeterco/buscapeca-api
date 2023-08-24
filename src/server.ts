@@ -32,8 +32,8 @@ app.get('/products', async function(req, res) {
     await getProducts(
         products,
         gkUrl,
-        'listagem-item',
-        '.imagem-produto > img',
+        '.listagem-item',
+        '.imagem-produto > img:first-child',
         'a.nome-produto',
         '.desconto-a-vista',
         3
@@ -67,7 +67,7 @@ async function getProducts(
 ) {
     const browser = await puppeteer.launch({
         headless: true,
-        args: [`--no-sandbox`, `--headless`, `--disable-gpu`, `--disable-dev-shm-usage`],
+        args: ['--headless']
     })
 
     const page = await browser.newPage()
