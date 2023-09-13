@@ -21,16 +21,6 @@ app.get('/products', async function(req, res) {
 
     await getProducts(
         products,
-        pichauUrl,
-        'a[data-cy="list-product"]',
-        '.MuiPaper-root > div > div > div > img',
-        'h2.MuiTypography-root',
-        '.MuiCardContent-root > div > div:nth-child(1) > div > div:nth-child(3)',
-        2
-    )
-
-    await getProducts(
-        products,
         gkUrl,
         '.listagem-item',
         '.imagem-produto > img:first-child',
@@ -47,6 +37,16 @@ app.get('/products', async function(req, res) {
         '.nameCard',
         '.priceCard',
         1
+    )
+
+    await getProducts(
+        products,
+        pichauUrl,
+        'a[data-cy="list-product"]',
+        '.MuiPaper-root > div > div > div > img',
+        'h2.MuiTypography-root',
+        '.MuiCardContent-root > div > div:nth-child(1) > div > div:nth-child(3)',
+        2
     )
 
     products.sort((a: IProduct, b: IProduct) => parseFloat(a.price.split('R$ ')[1]) > parseFloat(b.price.split('R$ ')[1]) ? 1: -1)
