@@ -1,7 +1,8 @@
+import { Builder, Browser, By, Key, until } from 'selenium-webdriver'
+import { Options } from 'selenium-webdriver/chrome'
 import express from 'express'
 import { load } from 'cheerio'
 import cors from 'cors'
-import { URL } from 'url'
 import { IProduct } from '../types/Product.types'
 import { slugify } from '../utils/slugify'
 
@@ -27,23 +28,23 @@ app.get('/products', async function(req, res) {
         1
     )
 
-/*    await getProducts(
+    await getProducts(
         gkUrl,
         '.listagem-item',
         '.imagem-produto > img:first-child',
         'a.nome-produto',
         '.desconto-a-vista',
         3
-    )*/
+    )
 
-/*    await getProducts(
+    await getProducts(
         pichauUrl,
         'a[data-cy="list-product"]',
         '.MuiPaper-root > div > div > div > img',
         'h2.MuiTypography-root',
         '.MuiCardContent-root > div > div:nth-child(1) > div > div:nth-child(3)',
         2
-    )*/
+    )
 
     products.sort((a: IProduct, b: IProduct) => parseFloat(a.price.split('R$ ')[1]) > parseFloat(b.price.split('R$ ')[1]) ? 1: -1)
     res.header("Access-Control-Allow-Origin", "*")
@@ -57,13 +58,15 @@ app.get('/products', async function(req, res) {
         priceSelector: string,
         idLoja: number
     ) {
+        let options = new Options();
+        options.addArguments("--headless");
+
+        let driver = await new Builder().forBrowser(Browser.CHROME).setChromeOptions(options).build();
+
         try {
-            await fetch(searchUrl, {
-                // @ts-ignore
-                method: 'GET', withCredentials: true, crossorigin: true, mode: 'no-cors',
-            }).then((response) => {
-                return response.text();
-            }).then((html: string) => {
+            await driver.get(searchUrl);
+
+            await driver.getPageSource().then((html: any) => {
                 const $ = load(html)
 
                 $(selector).each((i, el) => {
@@ -76,9 +79,9 @@ app.get('/products', async function(req, res) {
                         lojaId: idLoja, image, title, price, link
                     })
                 })
-            });
-        } catch (error: any) {
-            throw new Error(error);
+            })
+        } finally {
+            await driver.quit();
         }
     }
 });
