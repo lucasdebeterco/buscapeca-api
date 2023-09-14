@@ -1,10 +1,11 @@
-import { Builder, Browser, By, Key, until } from 'selenium-webdriver'
-import { Options } from 'selenium-webdriver/chrome'
 import express from 'express'
 import { load } from 'cheerio'
 import cors from 'cors'
 import { IProduct } from '../types/Product.types'
 import { slugify } from '../utils/slugify'
+
+const { Builder, Browser, By, Key, until } = require('selenium-webdriver');
+const { Options } = require('selenium-webdriver/chrome');
 
 const app = express();
 app.use(cors())
