@@ -60,7 +60,7 @@ app.get('/products', async function(req, res) {
         idLoja: number
     ) {
         let options = new firefox.Options();
-        options.addArguments("--headless");
+        options.addArguments("--headless=new");
 
         let driver = await new Builder().setFirefoxOptions(options).forBrowser(Browser.FIREFOX).build();
 
