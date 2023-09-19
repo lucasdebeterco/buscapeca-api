@@ -5,7 +5,7 @@ import { IProduct } from '../types/Product.types'
 import { slugify } from '../utils/slugify'
 
 const { Builder, Browser } = require('selenium-webdriver');
-const chrome = require('selenium-webdriver/chrome');
+const firefox = require('selenium-webdriver/firefox');
 
 const app = express();
 app.use(cors())
@@ -59,10 +59,11 @@ app.get('/products', async function(req, res) {
         priceSelector: string,
         idLoja: number
     ) {
-        let options = new chrome.Options();
-        options.addArguments("--headless=new");
+        let options = new firefox.Options();
+        options.addArguments("-headless");
+        options.binary_location = '/firefox/firefox-bin'
 
-        let driver = await new Builder().setChromeOptions(options).forBrowser(Browser.CHROME).build();
+        let driver = await new Builder().forBrowser('firefox').setFirefoxOptions(options).build();
 
         try {
             await driver.get(searchUrl);
