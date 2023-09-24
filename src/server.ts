@@ -23,14 +23,14 @@ app.get('/products', async function(req, res) {
     const pichauUrl = `https://www.pichau.com.br/search?q=${slugify(searchItem ? searchItem : '')}`
     const gkUrl = `https://www.gkinfostore.com.br/buscar?q=${slugify(searchItem ? searchItem : '')}`
 
-    await getProducts(
+/*    await getProducts(
         kabumUrl,
         '.productCard',
         '.imageCard',
         '.nameCard',
         '.priceCard',
         1
-    )
+    )*/
 
     await getProducts(
         gkUrl,
