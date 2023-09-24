@@ -5,7 +5,7 @@ import { IProduct } from '../types/Product.types'
 import { slugify } from '../utils/slugify'
 import fs from 'fs'
 
-const file = fs.readFileSync('')
+const file = fs.readFileSync('./E38BE8D6275B3E0CF1C0F00D0EEA1595.txt')
 
 const { Builder, Browser } = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
@@ -91,8 +91,8 @@ app.get('/products', async function(req, res) {
     }
 });
 
-app.get('/.well-known/pki-validation/', (req, res) => {
-    res.sendFile('')
+app.get('/.well-known/pki-validation/E38BE8D6275B3E0CF1C0F00D0EEA1595.txt', (req, res) => {
+    res.sendFile('/home/ec2-user/buscapeca-api/E38BE8D6275B3E0CF1C0F00D0EEA1595.txt')
 })
 
 app.listen(3000);
