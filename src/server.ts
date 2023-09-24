@@ -4,8 +4,15 @@ import cors from 'cors'
 import { IProduct } from '../types/Product.types'
 import { slugify } from '../utils/slugify'
 import fs from 'fs'
+import https from 'https'
 
-const file = fs.readFileSync('./E38BE8D6275B3E0CF1C0F00D0EEA1595.txt')
+const key = fs.readFileSync('private.key')
+const cert = fs.readFileSync('certificate.crt')
+
+const cred = {
+    key,
+    cert
+}
 
 const { Builder, Browser } = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
@@ -91,12 +98,11 @@ app.get('/products', async function(req, res) {
     }
 });
 
-app.get('/.well-known/pki-validation/E38BE8D6275B3E0CF1C0F00D0EEA1595.txt', (req, res) => {
-    res.sendFile('/home/node/app/E38BE8D6275B3E0CF1C0F00D0EEA1595.txt')
-})
-
 app.get('/test', (req, res) => {
     res.send('working!')
 })
 
 app.listen(3000);
+
+const httpsServer = https.createServer(cred, app)
+httpsServer.listen(8443)
