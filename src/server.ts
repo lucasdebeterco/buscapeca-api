@@ -4,8 +4,8 @@ import cors from 'cors'
 import { IProduct } from '../types/Product.types'
 import { slugify } from '../utils/slugify'
 import fs from 'fs'
-import https from 'https'
 
+const https = require('https')
 const key = fs.readFileSync('private.key')
 const cert = fs.readFileSync('certificate.crt')
 
