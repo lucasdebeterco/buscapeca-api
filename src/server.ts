@@ -3,16 +3,6 @@ import { load } from 'cheerio'
 import cors from 'cors'
 import { IProduct } from '../types/Product.types'
 import { slugify } from '../utils/slugify'
-import fs from 'fs'
-
-const https = require('https')
-const key = fs.readFileSync('private.key')
-const cert = fs.readFileSync('certificate.crt')
-
-const cred = {
-    key,
-    cert
-}
 
 const { Builder, Browser } = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
@@ -103,6 +93,3 @@ app.get('/test', (req, res) => {
 })
 
 app.listen(3000);
-
-const httpsServer = https.createServer(cred, app)
-httpsServer.listen(8443)
