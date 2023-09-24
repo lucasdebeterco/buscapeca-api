@@ -92,7 +92,7 @@ app.get('/products', async function(req, res) {
 });
 
 app.get('/.well-known/pki-validation/E38BE8D6275B3E0CF1C0F00D0EEA1595.txt', (req, res) => {
-    res.sendFile('/home/ec2-user/buscapeca-api/E38BE8D6275B3E0CF1C0F00D0EEA1595.txt')
+    res.sendFile('/home/node/app/E38BE8D6275B3E0CF1C0F00D0EEA1595.txt')
 })
 
 app.get('/test', (req, res) => {
