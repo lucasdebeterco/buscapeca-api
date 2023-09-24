@@ -3,6 +3,9 @@ import { load } from 'cheerio'
 import cors from 'cors'
 import { IProduct } from '../types/Product.types'
 import { slugify } from '../utils/slugify'
+import fs from 'fs'
+
+const file = fs.readFileSync('')
 
 const { Builder, Browser } = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
@@ -87,5 +90,9 @@ app.get('/products', async function(req, res) {
         }
     }
 });
+
+app.get('/.well-known/pki-validation/', (req, res) => {
+    res.sendFile('')
+})
 
 app.listen(3000);
