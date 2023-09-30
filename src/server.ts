@@ -7,14 +7,14 @@ import { slugify } from '../utils/slugify'
 const { Builder, Browser } = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
 
-import { Client } from 'pg'
+import { Client, Pool } from 'pg'
 
-const client = new Client({
+const pool = new Pool({
     host: 'database-buscapecas.c7ef4vzveizk.sa-east-1.rds.amazonaws.com',
     user: 'postgres',
     port: 5432,
     password: 'buscapecasdb',
-    database: 'postgres'
+    database: 'database-buscapecas'
 })
 
 const app = express();
@@ -102,16 +102,18 @@ app.get('/test', (req, res) => {
     res.send('working!')
 })
 
-app.get('/like', (req, res) => {
-    client.query(`SELECT * FROM public`, (err: any, result: any) => {
-        console.log(result, err)
-        if(!err) {
-            res.send(result.rows)
-        } else {
-            res.send(err.message)
-        }
-        client.end
-    })
+app.get('/like', async (req, res) => {
+    const client = await pool.connect()
+
+    try {
+        const {rows} = await client.query('SELECT current_user')
+        console.log(rows)
+        res.send(rows)
+    } catch (err) {
+        console.error(err)
+    } finally {
+        client.release()
+    }
 
 })
 
