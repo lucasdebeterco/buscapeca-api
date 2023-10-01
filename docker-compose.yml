@@ -1,5 +1,16 @@
 version: "3"
 services:
+  buscapecas-db:
+    image: postgres:alpine
+    ports:
+      - '5432:5432'
+    container_name: 'buscapecas-db'
+    restart: always
+    volumes:
+      - ./buscapecas-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pgpassword
   node:
     build: .
     command: "npm run dev"
@@ -10,3 +21,6 @@ services:
       - "3000"
     ports:
       - "3000:3000"
+
+volumes:
+  buscapecas-db:
