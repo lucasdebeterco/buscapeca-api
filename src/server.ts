@@ -1,23 +1,21 @@
 import express from 'express'
-import { load } from 'cheerio'
 import cors from 'cors'
+import dotenv from 'dotenv'
+import routes from './routes'
+
+import { load } from 'cheerio'
 import { IProduct } from '../types/Product.types'
 import { slugify } from '../utils/slugify'
+import { create } from './controllers/loja.controller';
+import { prisma } from './services/prisma';
 
 const { Builder, Browser } = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
 
-import { Client, Pool } from 'pg'
-
-const pool = new Pool({
-    host: 'database-buscapecas.c7ef4vzveizk.sa-east-1.rds.amazonaws.com',
-    user: 'postgres',
-    port: 5432,
-    password: 'buscapecasdb',
-    database: 'database-buscapecas'
-})
+dotenv.config()
 
 const app = express();
+app.use(express.json())
 app.use(cors())
 app.options('*', cors());
 
@@ -102,19 +100,16 @@ app.get('/test', (req, res) => {
     res.send('working!')
 })
 
-app.get('/like', async (req, res) => {
-    const client = await pool.connect()
+app.get('/novaLoja', async (req, res) => {
+    await prisma.loja.create({
+        //@ts-ignore
+        'nome': 'teste',
+        'likes': 0
+    })
 
-    try {
-        const {rows} = await client.query('SELECT current_user')
-        console.log(rows)
-        res.send(rows)
-    } catch (err) {
-        console.error(err)
-    } finally {
-        client.release()
-    }
-
+    res.send(prisma.loja.findMany())
 })
+
+//routes(app)
 
 app.listen(3000);

@@ -7,7 +7,7 @@
     "node": "18"
   },
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "npx prisma migrate dev && tsx watch src/server.ts",
     "build": "tsup src",
     "start": "node dist/server.js"
   },
@@ -27,6 +27,7 @@
     "@types/pg": "^8.10.3",
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "pg": "^8.11.3",
     "prisma": "^5.3.1",
