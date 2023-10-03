@@ -1,10 +1,18 @@
 import { prisma } from '../services/prisma'
 
-export const createLoja = async (data: any) => {
-    console.log('data', data)
-    const loja = await prisma.loja.create({
-        data
-    })
+export const findLojas = async () => {
+    const lojas = await prisma.loja.findMany()
 
-    return loja
+    return lojas
+}
+
+export const incrementLike = async (loja: number) => {
+    await prisma.loja.update({
+        where: {
+            id: loja,
+        },
+        data: {
+            likes: { increment: 1 },
+        },
+    })
 }

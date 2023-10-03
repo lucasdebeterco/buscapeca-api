@@ -1,16 +1,5 @@
 version: "3"
 services:
-  postgres:
-    image: postgres:alpine
-    ports:
-      - "5432:5432"
-    container_name: 'postgres'
-    restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    volumes:
-      - postgres:/var/lib/postgresql/data
   node:
     build: .
     command: "npm run dev"
@@ -21,5 +10,3 @@ services:
       - "3000"
     ports:
       - "3000:3000"
-volumes:
-  postgres:

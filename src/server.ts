@@ -6,8 +6,6 @@ import routes from './routes'
 import { load } from 'cheerio'
 import { IProduct } from '../types/Product.types'
 import { slugify } from '../utils/slugify'
-import { create } from './controllers/loja.controller';
-import { prisma } from './services/prisma';
 
 const { Builder, Browser } = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
@@ -96,20 +94,6 @@ app.get('/products', async function(req, res) {
     }
 });
 
-app.get('/test', (req, res) => {
-    res.send('working!')
-})
-
-app.get('/novaLoja', async (req, res) => {
-    await prisma.loja.create({
-        //@ts-ignore
-        'nome': 'teste',
-        'likes': 0
-    })
-
-    res.send(prisma.loja.findMany())
-})
-
-//routes(app)
+routes(app)
 
 app.listen(3000);
