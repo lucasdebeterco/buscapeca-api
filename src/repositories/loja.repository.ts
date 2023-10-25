@@ -6,13 +6,13 @@ export const findLojas = async () => {
     return lojas
 }
 
-export const incrementLike = async (loja: number) => {
+export const incrementRating = async (loja: number) => {
     await prisma.loja.update({
         where: {
             id: loja,
         },
         data: {
-            likes: { increment: 1 },
+            rating: { increment: 1 },
         },
     })
 }

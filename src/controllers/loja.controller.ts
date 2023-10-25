@@ -1,4 +1,4 @@
-import { findLojas, incrementLike } from '../repositories/loja.repository'
+import { findLojas, incrementRating } from '../repositories/loja.repository'
 
 export const getLojas = async (req: any, res: any) => {
     try {
@@ -9,9 +9,9 @@ export const getLojas = async (req: any, res: any) => {
     }
 }
 
-export const addLike = async (req: any, res: any) => {
+export const addRating = async (req: any, res: any) => {
     try {
-        await incrementLike(req.body.loja)
+        await incrementRating(req.body.loja)
         res.status(200).send()
     } catch (e) {
         res.status(400).send(e)
