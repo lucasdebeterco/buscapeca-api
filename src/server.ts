@@ -33,13 +33,14 @@ app.get('/products', async function(req, res) {
         )
     })
 
+    res.header("Access-Control-Allow-Origin", "*")
+
     Promise.all(promisses).then((promissesResult) => {
         promissesResult.map((targetResults) => targetResults.map(targetResult => {
             products.push(targetResult)
         }))
 
         products.sort((a: IProduct, b: IProduct) => parseFloat(a.price.split('R$ ')[1]) > parseFloat(b.price.split('R$ ')[1]) ? 1: -1)
-        res.header("Access-Control-Allow-Origin", "*")
         res.send(products)
     })
 });
