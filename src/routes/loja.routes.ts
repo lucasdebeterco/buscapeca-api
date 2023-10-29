@@ -1,7 +1,9 @@
-import { getLojas, addRating } from '../controllers/loja.controller'
+import { getLojas, addRating, deleteLoja } from '../controllers/loja.controller'
 
 const lojaRoutes = (app: any) => {
     app.get('/lojas', getLojas)
+
+    app.delete('/deleteLoja', deleteLoja)
 
     app.put('/addRating', addRating)
 

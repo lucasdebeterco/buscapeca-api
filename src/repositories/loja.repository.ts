@@ -6,6 +6,14 @@ export const findLojas = async () => {
     return lojas
 }
 
+export const deleteLojaQuery = async (loja: number) => {
+    await prisma.loja.delete({
+        where: {
+            id: loja
+        }
+    })
+}
+
 export const incrementRating = async (loja: number) => {
     await prisma.loja.update({
         where: {

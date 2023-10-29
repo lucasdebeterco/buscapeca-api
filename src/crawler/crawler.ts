@@ -1,7 +1,8 @@
 import { load } from 'cheerio'
 import { IProduct } from '../../types/Product.types'
+const scrollToBottom = require("scroll-to-bottomjs")
 
-const { Builder, Browser } = require('selenium-webdriver')
+const { Builder, Browser, JavascriptExecutor } = require('selenium-webdriver')
 const firefox = require('selenium-webdriver/firefox')
 
 export async function getProducts(
@@ -13,14 +14,21 @@ export async function getProducts(
     idLoja: number
 ) {
     let options = new firefox.Options();
-    options.addArguments("-headless");
+    //options.addArguments("-headless");
     options.binary_location = '/firefox/firefox-bin'
 
     let driver = await new Builder().forBrowser('firefox').setFirefoxOptions(options).build();
     let products: IProduct[]  = []
 
     try {
-        await driver.get(searchUrl);
+        await driver.get(searchUrl)
+
+        // prevenção de lazyload nos targets
+        await driver.sleep(1000);
+        driver.executeScript("window.scroll({top: 2500, behavior: 'smooth'});")
+        await driver.sleep(1000);
+        driver.executeScript("window.scroll({top: 5000, behavior: 'smooth'});")
+        await driver.sleep(2000);
 
         await driver.getPageSource().then((html: any) => {
             const $ = load(html)
@@ -31,7 +39,7 @@ export async function getProducts(
                 const price = $(priceSelector, el).text()
                 const link = String($('> a',el).attr('href'))
 
-                if(price !== null) {
+                if(price) {
                     products.push({
                         lojaId: idLoja, image, title, price, link
                     })
