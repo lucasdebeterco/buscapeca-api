@@ -1,4 +1,4 @@
-const lojaData = [
+export const lojaData = [
     {
         id: 1,
         name: 'kabum',

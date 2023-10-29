@@ -29,11 +29,13 @@ export async function getProducts(
                 const image = $(imageSelector, el).attr('src')
                 const title = $(titleSelector, el).text()
                 const price = $(priceSelector, el).text()
-                const link = 'https://www.kabum.com.br' + $('> a',el).attr('href')
+                const link = String($('> a',el).attr('href'))
 
-                products.push({
-                    lojaId: idLoja, image, title, price, link
-                })
+                if(price !== null) {
+                    products.push({
+                        lojaId: idLoja, image, title, price, link
+                    })
+                }
             })
         })
     } finally {

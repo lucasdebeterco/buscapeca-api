@@ -7,6 +7,7 @@ import { load } from 'cheerio'
 import { IProduct } from '../types/Product.types'
 import { slugify } from '../utils/slugify'
 import { getProducts } from './crawler/crawler'
+import { lojaData } from './data/lojaData'
 
 dotenv.config()
 
@@ -21,20 +22,26 @@ app.get('/products', async function(req, res) {
     const searchItem = req.query.searchItem && req.query.searchItem.toString()
     const products: IProduct[] = []
 
-    lojaData.map(async (loja) => {
-        products.concat(await getProducts(
+    const promisses = lojaData.map(async (loja) => {
+        return await getProducts(
             loja.url + slugify(searchItem ? searchItem : ''),
             loja.cardSelector,
             loja.imageSelector,
             loja.nameSelector,
             loja.priceSelector,
             loja.id
-        ))
+        )
     })
 
-    products.sort((a: IProduct, b: IProduct) => parseFloat(a.price.split('R$ ')[1]) > parseFloat(b.price.split('R$ ')[1]) ? 1: -1)
-    res.header("Access-Control-Allow-Origin", "*")
-    res.send(products)
+    Promise.all(promisses).then((promissesResult) => {
+        promissesResult.map((targetResults) => targetResults.map(targetResult => {
+            products.push(targetResult)
+        }))
+
+        products.sort((a: IProduct, b: IProduct) => parseFloat(a.price.split('R$ ')[1]) > parseFloat(b.price.split('R$ ')[1]) ? 1: -1)
+        res.header("Access-Control-Allow-Origin", "*")
+        res.send(products)
+    })
 });
 
 routes(app)
