@@ -20,7 +20,7 @@ export const deleteLoja = async (req: any, res: any) => {
 
 export const addRating = async (req: any, res: any) => {
     try {
-        await incrementRating(req.body.loja)
+        await incrementRating(req.body.rating, req.body.loja)
         res.status(200).send()
     } catch (e) {
         res.status(400).send(e)

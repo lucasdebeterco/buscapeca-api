@@ -14,13 +14,17 @@ export const deleteLojaQuery = async (loja: number) => {
     })
 }
 
-export const incrementRating = async (loja: number) => {
+export const incrementRating = async (rating: number, loja: number) => {
     await prisma.loja.update({
         where: {
             id: loja,
         },
-        data: {
-            rating: { increment: 1 },
-        },
+        data: [
+            {
+                ratingCount: {increment: rating}
+            }, {
+                rating: {increment: 1}
+            }
+        ],
     })
 }
