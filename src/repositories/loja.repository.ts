@@ -19,12 +19,10 @@ export const incrementRating = async (rating: number, loja: number) => {
         where: {
             id: loja,
         },
-        data: [
-            {
-                ratingCount: {increment: rating}
-            }, {
-                rating: {increment: 1}
-            }
-        ],
+
+        data: {
+            ratingCount: {increment: 1},
+            rating: {increment: rating}
+        }
     })
 }
