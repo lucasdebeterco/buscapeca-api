@@ -11,8 +11,9 @@ datasource db {
 }
 
 model Loja {
-  id          Int    @id @default(autoincrement())
-  nome        String
-  rating      Float?
-  ratingCount Int?
+  id              Int    @id @default(autoincrement())
+  nome            String
+  rating          Float?
+  ratingCount     Int?
+  notaReclameAqui Float?
 }
