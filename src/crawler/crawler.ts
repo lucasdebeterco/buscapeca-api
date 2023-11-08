@@ -11,7 +11,8 @@ export async function getProducts(
     imageSelector:string,
     titleSelector: string,
     priceSelector: string,
-    idLoja: number
+    idLoja: number,
+    lojaHost: string
 ) {
     let options = new firefox.Options();
     options.addArguments("-headless");
@@ -36,8 +37,8 @@ export async function getProducts(
             $(selector).each((i, el) => {
                 const image = $(imageSelector, el).attr('src')
                 const title = $(titleSelector, el).text()
-                const price = $(priceSelector, el).text()
-                const link = String($('> a',el).attr('href'))
+                const price = parseFloat($(priceSelector, el).text().split('R$')[1].split('via Pix')[0])
+                const link =  lojaHost + String($('> a',el).attr('href'))
 
                 if(price) {
                     products.push({

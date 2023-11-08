@@ -29,7 +29,8 @@ app.get('/products', async function(req, res) {
             loja.imageSelector,
             loja.nameSelector,
             loja.priceSelector,
-            loja.id
+            loja.id,
+            loja.lojaHost
         )
     })
 
@@ -40,7 +41,7 @@ app.get('/products', async function(req, res) {
             products.push(targetResult)
         }))
 
-        products.sort((a: IProduct, b: IProduct) => parseFloat(a.price.split('R$ ')[1]) > parseFloat(b.price.split('R$ ')[1]) ? 1: -1)
+        products.sort((a: IProduct, b: IProduct) => a.price > b.price ? 1: -1)
         res.send(products)
     })
 });
