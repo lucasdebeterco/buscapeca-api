@@ -22,21 +22,50 @@ app.get('/products', async function(req, res) {
     const searchItem = req.query.searchItem && req.query.searchItem.toString()
     const products: IProduct[] = []
 
-    await Promise.all(lojaData.map(async (loja) => {
-        await getProducts(
-            loja.url + slugify(searchItem ? searchItem : ''),
-            loja.cardSelector,
-            loja.imageSelector,
-            loja.nameSelector,
-            loja.priceSelector,
-            loja.id,
-            loja.lojaHost
-        ).then((productsResponse) => {
-            productsResponse.map(res => {
-                products.push(res)
-            })
+
+    await getProducts(
+        lojaData[0].url,
+        lojaData[0].cardSelector,
+        lojaData[0].imageSelector,
+        lojaData[0].nameSelector,
+        lojaData[0].priceSelector,
+        lojaData[0].id,
+        lojaData[0].lojaHost
+    ).then((productsResponse) => {
+        productsResponse.map(product => {
+            products.push(product)
         })
-    }))
+    })
+
+    await getProducts(
+        lojaData[1].url,
+        lojaData[1].cardSelector,
+        lojaData[1].imageSelector,
+        lojaData[1].nameSelector,
+        lojaData[1].priceSelector,
+        lojaData[1].id,
+        lojaData[1].lojaHost,
+    ).then((productsResponse) => {
+        productsResponse.map(product => {
+            products.push(product)
+        })
+    })
+
+    await getProducts(
+        lojaData[2].url,
+        lojaData[2].cardSelector,
+        lojaData[2].imageSelector,
+        lojaData[2].nameSelector,
+        lojaData[2].priceSelector,
+        lojaData[2].id,
+        lojaData[2].lojaHost,
+    ).then((productsResponse) => {
+        productsResponse.map(product => {
+            products.push(product)
+        })
+    })
+
+    console.log(products)
 
     products.sort((a: IProduct, b: IProduct) => a.price > b.price ? 1: -1)
 
