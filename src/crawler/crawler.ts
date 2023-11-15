@@ -15,7 +15,7 @@ export async function getProducts(
     lojaHost: string
 ) {
     let options = new firefox.Options();
-    options.addArguments("-headless");
+    //options.addArguments("-headless");
     options.binary_location = '/firefox/firefox-bin'
 
     let driver = await new Builder().forBrowser('firefox').setFirefoxOptions(options).build();
