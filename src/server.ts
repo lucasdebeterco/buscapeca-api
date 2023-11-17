@@ -24,7 +24,7 @@ app.get('/products', async function(req, res) {
 
 
     await getProducts(
-        lojaData[0].url,
+        lojaData[0].url + slugify(searchItem ? searchItem : ''),
         lojaData[0].cardSelector,
         lojaData[0].imageSelector,
         lojaData[0].nameSelector,
@@ -38,7 +38,7 @@ app.get('/products', async function(req, res) {
     })
 
     await getProducts(
-        lojaData[1].url,
+        lojaData[1].url + slugify(searchItem ? searchItem : ''),
         lojaData[1].cardSelector,
         lojaData[1].imageSelector,
         lojaData[1].nameSelector,
@@ -52,7 +52,7 @@ app.get('/products', async function(req, res) {
     })
 
     await getProducts(
-        lojaData[2].url,
+        lojaData[2].url + slugify(searchItem ? searchItem : ''),
         lojaData[2].cardSelector,
         lojaData[2].imageSelector,
         lojaData[2].nameSelector,
@@ -65,10 +65,7 @@ app.get('/products', async function(req, res) {
         })
     })
 
-    console.log(products)
-
     products.sort((a: IProduct, b: IProduct) => a.price > b.price ? 1: -1)
-
     res.send(products)
 });
 
