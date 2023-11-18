@@ -37,7 +37,7 @@ export async function getProducts(
             $(selector).each((i, el) => {
                 const image = $(imageSelector, el).attr('src')
                 const title = $(titleSelector, el).text()
-                const price = parseFloat($(priceSelector, el).text().split('R$')[1].split('via Pix')[0])
+                const price = parseFloat($(priceSelector, el).text().split('R$')[1].split('via Pix')[0].replace(/\D+/g, ''))
                 const link =  lojaHost + String($('> a',el).attr('href'))
 
                 if(price) {
